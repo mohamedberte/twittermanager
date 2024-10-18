@@ -90,3 +90,50 @@ class XPostFinanceFeatures:
         
         user_info = response.json()
         return user_info['data']['id']
+    
+    def get_followers(self, user_id, max_results=10):
+        """Méthode pour récupérer les abonnés d'un utilisateur"""
+        url = f"https://api.twitter.com/2/users/{user_id}/followers"
+        params = {"max_results": max_results}  # Limite à 10 résultats par défaut
+        response = self.oauth.get(url, params=params)
+        if response.status_code != 200:
+            raise Exception(f"Erreur lors de la récupération des abonnés: {response.status_code} {response.text}")
+        return response.json()
+
+    def get_following(self, user_id, max_results=10):
+        """Méthode pour récupérer les utilisateurs suivis par un utilisateur"""
+        url = f"https://api.twitter.com/2/users/{user_id}/following"
+        params = {"max_results": max_results}  # Limite à 10 résultats par défaut
+        response = self.oauth.get(url, params=params)
+        if response.status_code != 200:
+            raise Exception(f"Erreur lors de la récupération des utilisateurs suivis: {response.status_code} {response.text}")
+        return response.json()
+
+    def follow_user(self, user_id):
+        """"Méthode pour suivre un utilisateur"""
+        url = f"https://api.twitter.com/2/users/{self.get_user_id()}/following"
+        payload = {"target_user_id": user_id}
+        response = self.oauth.post(url, json=payload)
+        if response.status_code != 200:
+            raise Exception(f"Erreur lors du suivi de l'utilisateur: {response.status_code} {response.text}")
+        return response.json()
+
+    def unfollow_user(self, user_id):
+        """Méthode pour ne plus suivre un utilisateur"""
+        url = f"https://api.twitter.com/2/users/{self.get_user_id()}/following/{user_id}"
+        response = self.oauth.delete(url)
+        if response.status_code != 200:
+            raise Exception(f"Erreur lors de l'arrêt du suivi: {response.status_code} {response.text}")
+        return response.json()
+
+    def get_user_id(self, username="self"):
+        """Méthode pour récupérer l'ID utilisateur (modifiée pour fonctionner avec followers)"""
+        if username == "self":
+            url = "https://api.twitter.com/2/users/me"
+        else:
+            url = f"https://api.twitter.com/2/users/by/username/{username}"
+        response = self.oauth.get(url)
+        if response.status_code != 200:
+            raise Exception(f"Erreur lors de la récupération de l'ID utilisateur: {response.status_code} {response.text}")
+        user_info = response.json()
+        return user_info['data']['id']
