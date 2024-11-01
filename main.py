@@ -30,15 +30,17 @@ if __name__ == "__main__":
                                    access_token=ACCESS_TOKEN,
                                    access_token_secret=ACCESS_TOKEN_SECRET)
     
-    usernames = getDataFromTxtFile(filename="user.txt")
-    print(usernames)
+    service.post_tweet("Bonjour Le binks")
 
-    res = service.get_user_id(username="InvestInAssets")
+'''    usernames = getDataFromTxtFile(filename="user.txt")
+    print(usernames)'''
+
+'''    res = service.get_user_id(username="InvestInAssets")
     print(res)
     followers = service.get_followers(res)
 
     print(followers)
-
+'''
 
 '''    history_data = getHistoricalData(filename="")
 

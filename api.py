@@ -1,4 +1,4 @@
-from requests_oauthlib import OAuth1Session
+from requests_oauthlib import *
 
 class XPostFinanceFeatures:
     def __init__(self, consumer_key, consumer_secret, access_token, access_token_secret):
