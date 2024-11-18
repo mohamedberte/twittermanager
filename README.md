@@ -68,4 +68,4 @@ Les contributions sont les bienvenues ! Voici comment contribuer :
 
 1. Clonez le projet :  
    ```bash
-   git clone https://github.com/username/insight-market-news.git
+   git clone https://github.com/mohamedberte/insightmarketnews.git
